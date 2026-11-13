@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy policy — Spreadsheet Sync for GitLab</title>
+  <meta name="description" content="Privacy policy for Spreadsheet Sync for GitLab, including where tokens, settings, and spreadsheet data are stored.">
+  <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-128.png" type="image/png" sizes="128x128">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">
+      <img src="assets/icon-32.png" width="32" height="32" alt="">
+      Spreadsheet Sync for GitLab
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="help.html">Help</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </header>
+  <main>
+<h1>Privacy policy</h1>
+<p>Last updated: 12 November 2026 (Asia/Tokyo)</p>
+<p>This policy describes how Spreadsheet Sync for GitLab (the "add-on") handles information. The add-on is provided by an individual developer. You can contact the developer at <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a>.</p>
+<p>This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions. Google Sheets is a trademark of Google LLC.</p>
+<h2>What the add-on is</h2>
+<p>The add-on runs in Google Apps Script, inside your Google account. The developer does not operate a separate application server. When the add-on needs data from GitLab, Google's Apps Script service sends a request from Google to the GitLab host you configure.</p>
+<h2>Information the add-on uses</h2>
+<h3>1. GitLab connection settings</h3>
+<p>When you click Connect, the add-on stores:</p>
+<ul>
+<li>the GitLab base URL you entered (for example <code>https://gitlab.com</code>, or the URL of your own GitLab instance)</li>
+<li>your personal access token, if you provided one</li>
+<li>the GitLab username returned for that token, or the label <code>(public data only, no token)</code> if you did not provide a token</li>
+</ul>
+<p>This information is stored in Apps Script <strong>user properties</strong>. Only the signed-in Google user can read those properties. The token is not written into the spreadsheet, so other editors of the sheet cannot see it.</p>
+<p>If you leave the token blank, the add-on still stores the GitLab URL and the public-only label. No token is stored in that case.</p>
+<h3>2. Sync settings and run status</h3>
+<p>For each spreadsheet, the add-on stores your sync configuration (project or group path, dataset, filters, schedule, and the target sheet) and the result of the last run (success, error, or a partial fetch). This is also stored in your user properties, not in a server operated by the developer.</p>
+<p>A plan value (free or pro) may also be stored in your user properties. Today this defaults to free. A Stripe subscription check is planned and is not built yet. If payment is added later, this policy will be updated before that feature is offered.</p>
+<h3>3. Data written into your spreadsheet</h3>
+<p>The add-on writes GitLab records into a sheet in your Google spreadsheet: issues, merge requests, or time logs, including the columns described in the <a href="help.html">help page</a>. Anyone who can view or edit that spreadsheet can see that data.</p>
+<p>If a sync cannot finish in one run, the add-on stores the records fetched so far in a <strong>hidden sheet</strong> in the same spreadsheet, named <code>_gl2s_checkpoint_</code> followed by the sync id. That hidden sheet holds JSON for the fetched records. It does not hold your GitLab token. Anyone who can edit the spreadsheet can unhide that sheet. The hidden sheet is deleted when the fetch finishes, or when you remove the sync.</p>
+<h3>4. Requests to GitLab</h3>
+<p>The add-on sends requests only to the GitLab host you enter. The default is <code>https://gitlab.com</code>. If you enter another <code>https://</code> URL, requests go to that host instead.</p>
+<ul>
+<li>Issues and merge requests are read from that host's REST v4 API (<code>/api/v4/...</code>).</li>
+<li>Time logs are read from that host's GraphQL API (<code>/api/graphql</code>).</li>
+<li>If a token is stored, it is sent to that host as an <code>Authorization: Bearer</code> header. The token is not sent to any other host.</li>
+</ul>
+<p>The add-on does not send your GitLab token, spreadsheet contents, or Google account data to any other third-party service. Stripe is planned for paid plans and is not used today.</p>
+<h3>5. Google services that host the add-on</h3>
+<p>The add-on uses Google Apps Script, Google Sheets, Apps Script user properties, Apps Script triggers, and (when you authorize it) Google's OAuth permission system. Google provides those services under Google's own terms and privacy policy.</p>
+<p>The add-on's Apps Script project is configured to log exceptions to Google Cloud Logging (Stackdriver) for that project. An exception log may include an error message and a stack trace. The developer can use those logs only to diagnose failures. You should not put secrets into sheet cells that might appear in an error message, and the add-on does not intentionally log your GitLab token.</p>
+<h3>6. Google permissions (OAuth scopes)</h3>
+<p>The add-on asks Google for these permissions:</p>
+<ul>
+<li><strong>See, edit, create, and delete your Google Sheets spreadsheets</strong> (<code>https://www.googleapis.com/auth/spreadsheets</code>). Needed to create sheets, write and update rows, and (for scheduled refresh) to open a spreadsheet by ID when it is not open in your browser.</li>
+<li><strong>Connect to an external service</strong> (<code>https://www.googleapis.com/auth/script.external_request</code>). Needed so Apps Script can call the GitLab host you configure.</li>
+<li><strong>Show a sidebar and an Extensions menu</strong> (<code>https://www.googleapis.com/auth/script.container.ui</code>). Needed so the add-on can present its own menu items and sidebar. Google's consent screen will show its own wording for this scope.</li>
+<li><strong>Create and manage script triggers</strong> (<code>https://www.googleapis.com/auth/script.scriptapp</code>). Needed to create and remove the hourly trigger used for scheduled refresh. Google's consent screen will show its own wording for this scope.</li>
+</ul>
+<p>The add-on does not request access to your Gmail, your full Google Drive, or your Google contacts.</p>
+<h2>What the developer does not do</h2>
+<p>The developer does not sell your information, does not use it for advertising, and does not use it to build unrelated profiles. The developer does not operate a separate database of your GitLab data or tokens.</p>
+<h2>Your choices</h2>
+<ul>
+<li><strong>Disconnect</strong> in the sidebar clears the stored GitLab URL, token, and username from your user properties.</li>
+<li><strong>Remove</strong> on a sync card removes that sync's configuration and its hidden progress sheet. The visible data sheet is left in place so you do not lose the data already written.</li>
+<li>You can delete sheets, delete the spreadsheet, or uninstall the add-on from Google in the usual way.</li>
+<li>You can revoke the add-on's Google authorization from your Google account's third-party access settings.</li>
+<li>You can revoke a GitLab personal access token in your GitLab account.</li>
+</ul>
+<h2>Children</h2>
+<p>The add-on is not directed at children.</p>
+<h2>Changes to this policy</h2>
+<p>If the way the add-on handles information changes (for example, if a Stripe payment flow is added), this policy will be updated and the "Last updated" date will change. The updated policy will be posted at this page.</p>
+<h2>Contact</h2>
+<p>Questions about this policy or about your information: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+  </main>
+  <footer>
+    <div class="inner">
+      <p>Contact: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+      <p>This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions. Google Sheets is a trademark of Google LLC. This add-on is not affiliated with Google.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spreadsheet Sync for GitLab</title>
+  <meta name="description" content="Sync issues and merge requests from GitLab into a Google spreadsheet. Connect with a personal access token, or leave it blank to sync public projects only.">
+  <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-128.png" type="image/png" sizes="128x128">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">
+      <img src="assets/icon-32.png" width="32" height="32" alt="">
+      Spreadsheet Sync for GitLab
+    </a>
+    <nav>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="help.html">Help</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </header>
+  <main>
+    <div class="hero">
+      <img src="assets/icon-128.png" width="128" height="128" alt="Spreadsheet Sync for GitLab icon: a small table and sync arrows on a teal square">
+      <div>
+        <h1>Spreadsheet Sync for GitLab</h1>
+        <p class="lede">Sync issues and merge requests from GitLab into a Google spreadsheet. Connect with a personal access token, or leave it blank to sync public projects only.</p>
+      </div>
+    </div>
+
+    <p class="status">This site describes the add-on. It is not yet listed on the Google Workspace Marketplace.</p>
+
+    <div class="disclaimer">
+      This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions. Google Sheets is a trademark of Google LLC.
+    </div>
+
+    <div class="actions">
+      <a class="button" href="help.html">How to use it</a>
+      <a class="button secondary" href="privacy.html">Privacy policy</a>
+      <a class="button secondary" href="terms.html">Terms of service</a>
+    </div>
+
+    <h2>What it does</h2>
+    <p>The add-on runs inside Google Sheets. You connect to gitlab.com or to your own GitLab instance (the URL must start with https://), choose a project or a group, and copy issues or merge requests into a new sheet. It does not write your sheet edits back to GitLab.</p>
+    <p>Your GitLab token, if you provide one, is stored in your own Apps Script user properties. It is not written into the spreadsheet, so other editors of the sheet cannot see it. The add-on talks only to the GitLab host you enter. The developer does not operate a separate application server.</p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Connect to gitlab.com or a self-hosted GitLab instance over HTTPS</li>
+      <li>Optional personal access token with the <code>read_api</code> scope; public projects can be synced with the token left blank</li>
+      <li>Sync issues or merge requests, with filters for state and labels</li>
+      <li>Optional description column, and optional columns for scoped labels such as <code>priority::high</code></li>
+      <li>Your own columns and formulas stay on the same row as the GitLab item</li>
+      <li>You can rename headers and move columns without breaking the next sync</li>
+      <li>Large fetches resume on the next run and are not written to the visible sheet until they finish</li>
+    </ul>
+
+    <h2>Plans</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Free</th>
+          <th>Pro (planned)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manual sync</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Scheduled refresh (hourly or daily)</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Syncs per spreadsheet</td>
+          <td>1</td>
+          <td>Up to 50</td>
+        </tr>
+        <tr>
+          <td>Issues and merge requests</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Time logs</td>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The paid plan is not available for purchase yet. Payment would be handled by Stripe. The price is not decided.</p>
+
+    <h2>Support</h2>
+    <p>See the <a href="help.html">help page</a> for setup, column lists, and troubleshooting. For other questions, email <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a>.</p>
+  </main>
+  <footer>
+    <div class="inner">
+      <p>Contact: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+      <p>This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions. Google Sheets is a trademark of Google LLC. This add-on is not affiliated with Google.</p>
+    </div>
+  </footer>
+</body>
+</html>

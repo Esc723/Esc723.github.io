@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help — Spreadsheet Sync for GitLab</title>
+  <meta name="description" content="Setup and usage guide for Spreadsheet Sync for GitLab: connect, optional token, datasets, sync, and troubleshooting.">
+  <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-128.png" type="image/png" sizes="128x128">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">
+      <img src="assets/icon-32.png" width="32" height="32" alt="">
+      Spreadsheet Sync for GitLab
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="help.html" aria-current="page">Help</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </header>
+  <main>
+<h1>Spreadsheet Sync for GitLab</h1>
+<p>Spreadsheet Sync for GitLab is an unofficial Google Sheets editor add-on. It copies issues, merge requests, and (on the planned paid plan) time logs from GitLab into a spreadsheet.</p>
+<p>This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions.</p>
+<p>Support: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+<h2>1. Install and open</h2>
+<p>When the add-on is listed on the Google Workspace Marketplace, install it from the listing while you are signed in to the Google account you want to use. After you install it, open a Google spreadsheet (a new one is fine).</p>
+<p>The first time you install it, a sidebar should open on the right. Later, open it from the Extensions menu:</p>
+<ol>
+<li>Extensions</li>
+<li>Spreadsheet Sync for GitLab (the menu uses the Marketplace app name)</li>
+<li>Open</li>
+</ol>
+<p>You can also choose <strong>Sync all now</strong> from that menu to run every sync saved in this spreadsheet.</p>
+<p>The first time you use it, Google asks you to authorize the add-on. That permission dialog is from Google, not from GitLab. You only need to approve it once for your account.</p>
+<h2>2. Connect GitLab</h2>
+<p>In the sidebar, under <strong>Connect GitLab</strong>:</p>
+<ol>
+<li>Enter the <strong>GitLab URL</strong>. The default is <code>https://gitlab.com</code>. You can use your own GitLab instance instead. The URL must start with <code>https://</code>. Do not include a trailing <code>/api/v4</code> path; the add-on adds the API path itself.</li>
+<li>Optionally paste a <strong>personal access token</strong> that has the <code>read_api</code> scope. Leave the token empty if you only want to sync public projects.</li>
+<li>Click <strong>Connect</strong>.</li>
+</ol>
+<p>If the token is present, the add-on checks it by reading the GitLab user it belongs to. If the token is empty, the add-on makes a simple public request to confirm that the server answers, and the sidebar shows you as <code>(public data only, no token)</code>.</p>
+<p>The token is stored in your own Apps Script user properties. It is not written into the spreadsheet, so other people who can edit the sheet cannot see it. Disconnecting clears the stored connection and token from your user properties.</p>
+<h3>How to create a token (when you need one)</h3>
+<p>On GitLab.com or your GitLab instance, create a personal access token with the <code>read_api</code> scope. You do not need a write scope. The add-on only reads GitLab data and writes it into the spreadsheet. It does not create, edit, or close issues on GitLab.</p>
+<p>A token is required to read private projects or groups, and it is the reliable way to search the projects and groups you belong to. Time logs are also likely to need a token. Public issues and merge requests on a public project can be synced with the token left blank.</p>
+<h2>3. Add a sync</h2>
+<p>After you are connected, use <strong>Add a sync</strong>:</p>
+<ol>
+<li><strong>From</strong>: Project or Group.</li>
+<li><strong>Data</strong>: Issues, Merge requests, or Time logs (Pro).</li>
+<li><strong>Project or group path</strong>: the full path, for example <code>my-group/my-project</code> or <code>my-group</code>. You can type the path, or click <strong>Search</strong> and pick from the results.</li>
+<li>For issues and merge requests:
+   - <strong>State</strong>: All, Open, Closed, or Merged (merge requests).
+   - <strong>Only with labels</strong>: optional, comma-separated.
+   - <strong>One column per scoped label</strong>: on by default. A GitLab label such as <code>priority::high</code> becomes a <code>priority</code> column whose value is <code>high</code>. If you leave the scope list empty, the add-on creates columns for up to the 10 scopes that appear most often (each must appear on at least 5 percent of the rows). You can type the scopes yourself, for example <code>priority, severity, workflow</code>.
+   - <strong>Include description</strong>: off by default. Turn it on if you want the issue or merge request description in the sheet. Long text is cut off at Google Sheets' 50,000-character cell limit.</li>
+<li>For time logs (Pro): <strong>Time logs from the last N days</strong>, default 90.</li>
+<li><strong>Refresh</strong>: Manual only (free), Every hour (Pro), or Every day (Pro).</li>
+<li>Click <strong>Save</strong>. The add-on creates a new sheet named like <code>Issues - my-group/my-project</code>.</li>
+</ol>
+<p>The free plan allows one sync in a spreadsheet, issues and merge requests only, and manual refresh. If you choose a Pro option on the free plan, the add-on will refuse to save and will explain why.</p>
+<h3>Search without a token</h3>
+<p>The project search asks GitLab for projects you belong to (<code>membership=true</code>). With no token, that search often returns nothing. Group search does not use that membership filter and may still find public groups. In either case you can type the public project or group path yourself, for example <code>gitlab-org/gitlab-runner</code>.</p>
+<h2>4. Run a sync</h2>
+<p>On a saved sync card, click <strong>Sync now</strong>. Or use Extensions &gt; Spreadsheet Sync for GitLab &gt; Sync all now.</p>
+<p>While it runs, the sidebar shows "Working...". When it finishes, the card shows a line such as:</p>
+<p><code>Last sync [date and time]: 2585 rows (2585 new, 0 removed)</code></p>
+<p>If GitLab has more items than can be fetched in one run, the add-on stops before the Apps Script time limit, keeps the records it already has, and reports that the sync will continue on the next run. It does not write to the visible sheet until every page has been fetched. Run <strong>Sync now</strong> again to continue. A half-finished fetch older than six hours is discarded and started again.</p>
+<p>A scheduled refresh (Pro) uses a time-driven trigger that runs once an hour. Hourly syncs run on that trigger. Daily syncs run when at least 23 hours have passed since the last successful sync. The trigger is created only when at least one sync in the spreadsheet is set to hourly or daily, and it is removed when none are.</p>
+<h2>5. How the sheet behaves</h2>
+<ul>
+<li>Synced columns are identified by a note on the header cell, of the form <code>gl2s:id</code> or <code>gl2s:title</code>. You can rename the visible header text and move columns. The next sync still finds them.</li>
+<li>Columns without that note are yours. The add-on never writes into them. Because rows are updated in place, your values and formulas stay on the same GitLab item. New items are added at the bottom. When an item disappears from GitLab (or no longer matches your filters), that row is deleted and the rows below it move up.</li>
+<li>Dates such as due dates are written so they do not shift by a day when time zones differ. Date and time values are written as date-times. Time spent and estimates are written in hours, with two decimal places. Text that would otherwise be treated as a formula (for example a title starting with <code>=</code>) is stored as plain text.</li>
+<li>If you point the add-on at a sheet that already has data and that data was not created by this add-on, it will refuse to write, so it does not overwrite your work. Let the add-on create a new sheet, or start from a blank sheet.</li>
+<li>If you delete the Issue ID / MR ID / Time log ID column, the add-on can no longer match existing rows and will rewrite the synced columns from the top.</li>
+</ul>
+<p>Removing a sync from the sidebar does not delete the sheet. It only removes the sync configuration and any hidden progress sheet used for that sync.</p>
+<h2>6. Columns</h2>
+<h3>Issues</h3>
+<p>Issue ID, Reference, IID, Title, State, Type, Author, Assignees, Labels, then any scoped-label columns, then Milestone, Milestone due, Created, Updated, Closed, Due date, Weight, Estimate (h), Time spent (h), Tasks done, Comments, Upvotes, Confidential, URL, and Description if you included it.</p>
+<h3>Merge requests</h3>
+<p>MR ID, Reference, IID, Title, State, Draft, Author, Assignees, Reviewers, Labels, then any scoped-label columns, then Milestone, Source branch, Target branch, Created, Updated, Merged, Closed, Time spent (h), Comments, URL, and Description if you included it.</p>
+<h3>Time logs (Pro)</h3>
+<p>Time log ID, Spent at, User, Username, Hours, On (Issue or Merge request), Reference, Title, Summary, URL.</p>
+<p>Time logs are read with GitLab's GraphQL API. Issues and merge requests are read with GitLab's REST v4 API, 100 items per page, oldest first.</p>
+<h2>7. Plans</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Free</th>
+<th>Pro (planned)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manual sync</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Scheduled refresh (hourly or daily)</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Syncs per spreadsheet</td>
+<td>1</td>
+<td>Up to 50</td>
+</tr>
+<tr>
+<td>Issues and merge requests</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Time logs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>The paid plan is not available for purchase yet. The add-on currently treats every user as being on the free plan unless a plan value has been stored in that user's properties. Payment through Stripe is planned; the price is not decided.</p>
+<h2>8. Troubleshooting</h2>
+<p><strong>GitLab rejected the access token.</strong> The token may be wrong, revoked, or expired. Create a new personal access token with the <code>read_api</code> scope and connect again.</p>
+<p><strong>The token cannot read this resource.</strong> The token needs the <code>read_api</code> scope and permission to see that project or group. Private data cannot be read with the token left blank.</p>
+<p><strong>Not found.</strong> Check the project or group path. Confirm that the project is public, or that the token can see it.</p>
+<p><strong>The GitLab URL must start with https://.</strong> Change the URL and connect again.</p>
+<p><strong>This sheet already has data that was not created by the sync.</strong> Use a blank sheet, or let the add-on create a new one.</p>
+<p><strong>Another sync is running. Try again in a minute.</strong> Wait for the other run to finish, then try again.</p>
+<p><strong>Fetched N items so far. The sync continues on the next run.</strong> This is expected for large projects. Click Sync now again.</p>
+<p><strong>Search returns nothing without a token.</strong> Type the public path yourself.</p>
+<p><strong>Scheduled refresh does not run.</strong> Scheduled refresh is a Pro feature and is not sold yet. On the free plan, use Sync now.</p>
+<p><strong>The sidebar opened but the menu is missing, or the editor shows no functions.</strong> This can happen right after a new Apps Script project is imported. In the Apps Script editor, add a blank line at the end of <code>Code.gs</code> and <code>Sidebar.html</code>, save, reload the spreadsheet, then run authorization from the Extensions menu. If you are only using the installed add-on from the Marketplace, you should not need to do this.</p>
+<p><strong>A hidden sheet named <code>_gl2s_checkpoint_...</code> appeared.</strong> That is a temporary progress sheet for a sync that has not finished. It is hidden. Anyone who can edit the spreadsheet can unhide it. It is deleted when the fetch completes, or when you remove that sync. It does not contain your GitLab token.</p>
+<p><strong>Could not reach GitLab, or repeated HTTP 500, 502, 503, or 504.</strong> The add-on retries with a short delay. If GitLab stays unavailable, try again later.</p>
+<p><strong>GitLab kept rejecting requests because of its rate limit.</strong> The add-on waits and retries when GitLab returns HTTP 429. If it still stops, wait a few minutes and run the sync again.</p>
+<h2>9. What the add-on does not do</h2>
+<ul>
+<li>It does not write changes back to GitLab. Editing a cell in the sheet does not update the issue or merge request.</li>
+<li>It does not use GitLab's OAuth login. You paste a personal access token, or you use public data with no token.</li>
+<li>It does not send your data to any server operated by the developer. Requests go only to the GitLab host you enter.</li>
+</ul>
+<h2>10. Privacy and terms</h2>
+<ul>
+<li><a href="privacy.html">Privacy policy</a></li>
+<li><a href="terms.html">Terms of service</a></li>
+</ul>
+<p>Questions or problems: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+  </main>
+  <footer>
+    <div class="inner">
+      <p>Contact: <a href="mailto:datarateam@gmail.com">datarateam@gmail.com</a></p>
+      <p>This add-on is not affiliated, endorsed, sponsored, or approved with or by GitLab Inc. GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions. Google Sheets is a trademark of Google LLC. This add-on is not affiliated with Google.</p>
+    </div>
+  </footer>
+</body>
+</html>

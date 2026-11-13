@@ -1,0 +1,198 @@
+/* Spreadsheet Sync for GitLab — static site styles. No external font or script requests. */
+:root {
+  --teal: #0e4654;
+  --teal-dark: #08303a;
+  --cream: #f5f1e8;
+  --paper: #f7f3ec;
+  --ink: #1c2324;
+  --muted: #4a5759;
+  --line: #d5ddd9;
+  --fill: #e7eee9;
+  --accent: #1a6b7a;
+  --sand: #e8c48c;
+  --max: 44rem;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 18px; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Source Sans 3", "Source Sans Pro", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+a { color: var(--accent); text-underline-offset: 0.12em; }
+a:hover { color: var(--teal-dark); }
+a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+header {
+  background: var(--teal-dark);
+  color: var(--cream);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+header a { color: var(--cream); text-decoration: none; }
+header a:hover { color: #fff; }
+header a:focus-visible { outline-color: var(--cream); }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: block;
+}
+
+nav { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; }
+nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Source Serif 4", Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--teal-dark);
+}
+
+h1 { font-size: 2rem; margin: 0 0 1rem; }
+h2 { font-size: 1.35rem; margin: 2rem 0 0.7rem; }
+h3 { font-size: 1.12rem; margin: 1.5rem 0 0.5rem; }
+
+p, ul, ol { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.3rem; }
+li { margin: 0.25rem 0; }
+
+.lede { font-size: 1.08rem; color: var(--muted); }
+
+.disclaimer {
+  background: var(--fill);
+  border-left: 4px solid var(--teal);
+  padding: 0.75rem 1rem;
+  margin: 1.25rem 0;
+  font-size: 0.92rem;
+}
+
+.hero {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.hero img {
+  width: 96px;
+  height: 96px;
+  border-radius: 21px;
+  flex: 0 0 96px;
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0 1.75rem; }
+
+.button {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--cream);
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.button:hover { background: var(--teal-dark); color: #fff; }
+
+.button.secondary {
+  background: transparent;
+  color: var(--teal);
+  border: 1px solid var(--teal);
+}
+
+.button.secondary:hover { background: var(--fill); color: var(--teal-dark); }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th { background: var(--fill); font-weight: 600; }
+
+code {
+  font-family: "Source Code Pro", "Cascadia Code", "Consolas", "Menlo", monospace;
+  font-size: 0.88em;
+  background: var(--fill);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  background: var(--teal-dark);
+  color: var(--cream);
+  padding: 0.9rem 1rem;
+  overflow: auto;
+  border-radius: 4px;
+  font-size: 0.88rem;
+}
+
+pre code { background: none; padding: 0; color: inherit; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 1.4rem 1.25rem 2.2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+footer .inner { max-width: var(--max); margin: 0 auto; }
+footer p { margin: 0 0 0.6rem; }
+footer a { color: var(--teal); }
+
+.status {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  html { font-size: 17px; }
+  .hero { flex-direction: column; }
+  .hero img { width: 72px; height: 72px; border-radius: 16px; flex-basis: 72px; }
+  h1 { font-size: 1.7rem; }
+}
